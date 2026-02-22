@@ -3,45 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🐱 小喵老师的函数课堂</title>
+    <title>🐱 小喵老师的函数课堂 - 5级挑战</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Comic Sans MS', 'Microsoft YaHei', sans-serif;
             background: linear-gradient(135deg, #fff5f5 0%, #f0e6ff 50%, #e6f7ff 100%);
             min-height: 100vh;
             padding: 20px;
         }
+        .container { max-width: 800px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 { font-size: 2.5em; color: #6b4c9a; text-shadow: 2px 2px 0 #fff; }
+        .header .subtitle { font-size: 1.2em; color: #888; margin-top: 10px; }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        /* 标题 */
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .header h1 {
-            font-size: 2.5em;
-            color: #6b4c9a;
-            text-shadow: 2px 2px 0 #fff;
-        }
-
-        .header .subtitle {
-            font-size: 1.2em;
-            color: #888;
-            margin-top: 10px;
-        }
-
-        /* 小喵老师区域 */
         .cat-teacher {
             background: white;
             border-radius: 20px;
@@ -52,39 +27,58 @@
             align-items: flex-start;
             gap: 20px;
         }
+        .cat-avatar { font-size: 4em; animation: catBounce 2s ease-in-out infinite; }
+        @keyframes catBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .cat-speech { flex: 1; }
+        .cat-name { font-size: 1.3em; font-weight: bold; color: #ff6b9d; margin-bottom: 10px; }
+        .cat-content { font-size: 1.1em; line-height: 1.8; color: #444; }
+        .cat-content strong { color: #6b4c9a; }
 
-        .cat-avatar {
-            font-size: 4em;
-            animation: catBounce 2s ease-in-out infinite;
+        .level-select {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(107, 76, 154, 0.15);
         }
-
-        @keyframes catBounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        .level-title { font-size: 1.5em; color: #6b4c9a; text-align: center; margin-bottom: 20px; }
+        .level-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; }
+        .level-btn {
+            padding: 20px 15px;
+            border: 3px solid #e0d0ff;
+            border-radius: 15px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.3s;
+            text-align: center;
+            background: #f8f0ff;
         }
+        .level-btn:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(107, 76, 154, 0.3); }
+        .level-btn.active { border-color: #6b4c9a; background: #6b4c9a; color: white; }
+        .level-stars { font-size: 1.5em; margin-bottom: 5px; }
+        .level-name { font-size: 1.1em; font-weight: bold; }
+        .level-info { font-size: 0.85em; opacity: 0.8; margin-top: 5px; }
 
-        .cat-speech {
-            flex: 1;
+        .game-area { display: none; }
+        .game-area.show { display: block; }
+
+        .progress-bar {
+            background: white;
+            border-radius: 15px;
+            padding: 15px 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(107, 76, 154, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
         }
+        .progress-text { font-size: 1.1em; color: #6b4c9a; font-weight: bold; }
+        .timer { font-size: 1.2em; color: #ff6b9d; font-weight: bold; }
+        .timer.warning { color: #ff6b56; animation: timerPulse 0.5s infinite; }
+        @keyframes timerPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-        .cat-name {
-            font-size: 1.3em;
-            font-weight: bold;
-            color: #ff6b9d;
-            margin-bottom: 10px;
-        }
-
-        .cat-content {
-            font-size: 1.1em;
-            line-height: 1.8;
-            color: #444;
-        }
-
-        .cat-content strong {
-            color: #6b4c9a;
-        }
-
-        /* 可视化区域 */
         .visualization {
             background: white;
             border-radius: 20px;
@@ -92,449 +86,359 @@
             margin-bottom: 25px;
             box-shadow: 0 10px 30px rgba(107, 76, 154, 0.15);
         }
+        .viz-title { font-size: 1.5em; color: #6b4c9a; text-align: center; margin-bottom: 25px; }
+        .function-machine { display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 30px; }
+        .input-box, .output-box { width: 100px; height: 80px; border: 4px solid #6b4c9a; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 2em; font-weight: bold; background: #f8f0ff; color: #6b4c9a; }
+        .machine { width: 150px; height: 100px; background: linear-gradient(135deg, #ff9a56 0%, #ff6b9d 100%); border-radius: 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2em; font-weight: bold; position: relative; overflow: hidden; }
+        .machine::before { content: ''; position: absolute; top: 10px; left: 10px; right: 10px; height: 8px; background: rgba(255,255,255,0.3); border-radius: 4px; }
+        .machine-label { text-align: center; }
+        .arrow { font-size: 2em; color: #6b4c9a; animation: arrowPulse 1s ease-in-out infinite; }
+        @keyframes arrowPulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+        .controls { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 20px; }
+        .controls input { width: 100px; height: 50px; border: 3px solid #ff6b9d; border-radius: 12px; font-size: 1.5em; text-align: center; font-family: inherit; }
+        .controls button { padding: 12px 30px; font-size: 1.2em; background: linear-gradient(135deg, #ff9a56 0%, #ff6b9d 100%); color: white; border: none; border-radius: 12px; cursor: pointer; font-family: inherit; font-weight: bold; transition: transform 0.2s, box-shadow 0.2s; }
+        .controls button:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(255, 107, 157, 0.4); }
+        .function-selector { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+        .function-btn { padding: 10px 20px; font-size: 1em; background: #f0e6ff; color: #6b4c9a; border: 2px solid #6b4c9a; border-radius: 10px; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+        .function-btn.active { background: #6b4c9a; color: white; }
+        .function-btn:hover { background: #e0d0ff; }
+        .tip { text-align: center; color: #888; font-size: 0.9em; margin-top: 20px; }
 
-        .viz-title {
-            font-size: 1.5em;
-            color: #6b4c9a;
-            text-align: center;
-            margin-bottom: 25px;
-        }
+        .practice { background: white; border-radius: 20px; padding: 30px; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(107, 76, 154, 0.15); }
+        .practice-title { font-size: 1.5em; color: #6b4c9a; text-align: center; margin-bottom: 20px; }
+        .question { text-align: center; margin-bottom: 20px; }
+        .question-text { font-size: 1.3em; color: #444; margin-bottom: 15px; }
+        .question-input { width: 80px; height: 45px; border: 3px solid #ff9a56; border-radius: 10px; font-size: 1.3em; text-align: center; font-family: inherit; }
+        .check-btn { display: block; margin: 20px auto 0; padding: 12px 40px; font-size: 1.2em; background: linear-gradient(135deg, #56c9ff 0%, #6b4c9a 100%); color: white; border: none; border-radius: 12px; cursor: pointer; font-family: inherit; font-weight: bold; }
+        .result { text-align: center; margin-top: 20px; padding: 15px; border-radius: 12px; font-size: 1.2em; display: none; }
+        .result.correct { display: block; background: #d4edda; color: #155724; }
+        .result.wrong { display: block; background: #f8d7da; color: #721c24; }
+        .score { text-align: center; font-size: 1.2em; color: #6b4c9a; margin-top: 15px; }
 
-        .function-machine {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-        }
-
-        .input-box, .output-box {
-            width: 100px;
-            height: 80px;
-            border: 4px solid #6b4c9a;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2em;
-            font-weight: bold;
-            background: #f8f0ff;
-            color: #6b4c9a;
-        }
-
-        .machine {
-            width: 150px;
-            height: 100px;
-            background: linear-gradient(135deg, #ff9a56 0%, #ff6b9d 100%);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2em;
-            font-weight: bold;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .machine::before {
-            content: '';
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            right: 10px;
-            height: 8px;
-            background: rgba(255,255,255,0.3);
-            border-radius: 4px;
-        }
-
-        .machine-label {
-            text-align: center;
-        }
-
-        .arrow {
-            font-size: 2em;
-            color: #6b4c9a;
-            animation: arrowPulse 1s ease-in-out infinite;
-        }
-
-        @keyframes arrowPulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
-        /* 输入控制 */
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-
-        .controls input {
-            width: 100px;
-            height: 50px;
-            border: 3px solid #ff6b9d;
-            border-radius: 12px;
-            font-size: 1.5em;
-            text-align: center;
-            font-family: inherit;
-        }
-
-        .controls button {
-            padding: 12px 30px;
-            font-size: 1.2em;
-            background: linear-gradient(135deg, #ff9a56 0%, #ff6b9d 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            font-family: inherit;
-            font-weight: bold;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .controls button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 107, 157, 0.4);
-        }
-
-        /* 函数选择 */
-        .function-selector {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-
-        .function-btn {
-            padding: 10px 20px;
-            font-size: 1em;
-            background: #f0e6ff;
-            color: #6b4c9a;
-            border: 2px solid #6b4c9a;
-            border-radius: 10px;
-            cursor: pointer;
-            font-family: inherit;
-            transition: all 0.2s;
-        }
-
-        .function-btn.active {
-            background: #6b4c9a;
-            color: white;
-        }
-
-        .function-btn:hover {
-            background: #e0d0ff;
-        }
-
-        /* 练习区域 */
-        .practice {
+        .result-screen {
+            display: none;
             background: white;
             border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 25px;
+            padding: 40px;
+            text-align: center;
             box-shadow: 0 10px 30px rgba(107, 76, 154, 0.15);
         }
-
-        .practice-title {
-            font-size: 1.5em;
-            color: #6b4c9a;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .question {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .question-text {
-            font-size: 1.3em;
-            color: #444;
-            margin-bottom: 15px;
-        }
-
-        .question-input {
-            width: 80px;
-            height: 45px;
-            border: 3px solid #ff9a56;
-            border-radius: 10px;
-            font-size: 1.3em;
-            text-align: center;
-            font-family: inherit;
-        }
-
-        .check-btn {
-            display: block;
-            margin: 20px auto 0;
-            padding: 12px 40px;
-            font-size: 1.2em;
-            background: linear-gradient(135deg, #56c9ff 0%, #6b4c9a 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            font-family: inherit;
-            font-weight: bold;
-        }
-
-        .result {
-            text-align: center;
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 12px;
-            font-size: 1.2em;
-            display: none;
-        }
-
-        .result.correct {
-            display: block;
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .result.wrong {
-            display: block;
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        .score {
-            text-align: center;
-            font-size: 1.2em;
-            color: #6b4c9a;
-            margin-top: 15px;
-        }
-
-        /* 动画 */
-        @keyframes numberMove {
-            0% { transform: translateX(0) scale(1); opacity: 1; }
-            50% { transform: translateX(50px) scale(1.3); }
-            100% { transform: translateX(100px) scale(1); opacity: 0; }
-        }
-
-        .moving-number {
-            position: absolute;
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #ff6b9d;
-            animation: moveThrough 1s ease-in-out forwards;
-        }
-
-        @keyframes moveThrough {
-            0% { left: 20%; opacity: 1; }
-            50% { left: 50%; opacity: 1; transform: scale(1.3); }
-            100% { left: 80%; opacity: 0; }
-        }
-
-        /* 底部提示 */
-        .tip {
-            text-align: center;
-            color: #888;
-            font-size: 0.9em;
-            margin-top: 20px;
-        }
+        .result-screen.show { display: block; }
+        .result-title { font-size: 2em; color: #6b4c9a; margin-bottom: 20px; }
+        .result-score { font-size: 3em; margin: 20px 0; }
+        .result-message { font-size: 1.3em; color: #666; margin-bottom: 30px; }
+        .back-btn { padding: 15px 40px; font-size: 1.3em; background: linear-gradient(135deg, #ff9a56 0%, #ff6b9d 100%); color: white; border: none; border-radius: 15px; cursor: pointer; font-family: inherit; font-weight: bold; }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- 标题 -->
         <div class="header">
             <h1>🐱 小喵老师的函数课堂</h1>
-            <div class="subtitle">和小喵老师一起学函数吧~ 喵~ 🐱</div>
+            <div class="subtitle">选择难度开始挑战吧！喵~ 🐱</div>
         </div>
 
-        <!-- 小喵老师讲解 -->
         <div class="cat-teacher">
             <div class="cat-avatar">🐱</div>
             <div class="cat-speech">
                 <div class="cat-name">小喵老师 🐱</div>
-                <div class="cat-content" id="lessonContent">
+                <div class="cat-content">
                     <strong>喵~ 欢迎来到函数课堂！</strong><br><br>
-                    今天我们要认识一个新朋友——<strong>函数</strong>！<br><br>
-                    🎁 想象一下，你有一个<strong>魔法盒子</strong>，你把数字放进去，它就会按照固定规则变出另一个数字！<br><br>
-                    👉 比如：有一个"加5"的魔法盒子，你放<strong>3</strong>进去，会出来<strong>8</strong>；放<strong>10</strong>进去，会出来<strong>15</strong>！<br><br>
-                    <strong>这就是函数！</strong>输入一个数字，经过"加工"，输出一个结果。喵~
+                    📚 我们有 <strong>5个难度等级</strong>，从简单到困难：<br>
+                    ⭐ 加法 → ⭐⭐ 减法 → ⭐⭐⭐ 乘法 → ⭐⭐⭐⭐ 除法 → ⭐⭐⭐⭐⭐ 混合挑战<br><br>
+                    🎯 选择你的级别，开始挑战吧！喵~
                 </div>
             </div>
         </div>
 
-        <!-- 可视化区域 -->
-        <div class="visualization">
-            <div class="viz-title">👀 看看函数是怎么"工作"的</div>
-            
-            <div class="function-selector">
-                <button class="function-btn active" onclick="selectFunction('add5')">➕ 加5</button>
-                <button class="function-btn" onclick="selectFunction('multiply2')">✖️ 乘2</button>
-                <button class="function-btn" onclick="selectFunction('subtract3')">➖ 减3</button>
+        <div class="level-select" id="levelSelect">
+            <div class="level-title">🎮 选择难度等级</div>
+            <div class="level-grid">
+                <div class="level-btn" onclick="startGame(1)">
+                    <div class="level-stars">⭐</div>
+                    <div class="level-name">等级 1</div>
+                    <div class="level-info">加法训练</div>
+                    <div class="level-info">5题</div>
+                </div>
+                <div class="level-btn" onclick="startGame(2)">
+                    <div class="level-stars">⭐⭐</div>
+                    <div class="level-name">等级 2</div>
+                    <div class="level-info">减法训练</div>
+                    <div class="level-info">8题</div>
+                </div>
+                <div class="level-btn" onclick="startGame(3)">
+                    <div class="level-stars">⭐⭐⭐</div>
+                    <div class="level-name">等级 3</div>
+                    <div class="level-info">乘法训练</div>
+                    <div class="level-info">10题</div>
+                </div>
+                <div class="level-btn" onclick="startGame(4)">
+                    <div class="level-stars">⭐⭐⭐⭐</div>
+                    <div class="level-name">等级 4</div>
+                    <div class="level-info">除法训练</div>
+                    <div class="level-info">12题</div>
+                </div>
+                <div class="level-btn" onclick="startGame(5)">
+                    <div class="level-stars">⭐⭐⭐⭐⭐</div>
+                    <div class="level-name">等级 5</div>
+                    <div class="level-info">混合挑战</div>
+                    <div class="level-info">15题 + 计时</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-area" id="gameArea">
+            <div class="progress-bar">
+                <div class="progress-text" id="progressText">题目 1/5</div>
+                <div class="timer" id="timer" style="display:none;">⏱️ 60秒</div>
             </div>
 
-            <div class="function-machine">
-                <div class="input-box" id="inputBox">?</div>
-                <div class="arrow">→</div>
-                <div class="machine">
-                    <div class="machine-label">
-                        <div>⚙️</div>
-                        <div id="functionName">x + 5</div>
+            <div class="visualization">
+                <div class="viz-title">👀 看看函数是怎么"工作"的</div>
+                <div class="function-selector" id="functionSelector"></div>
+                <div class="function-machine">
+                    <div class="input-box" id="inputBox">?</div>
+                    <div class="arrow">→</div>
+                    <div class="machine">
+                        <div class="machine-label">
+                            <div>⚙️</div>
+                            <div id="functionName">x + 5</div>
+                        </div>
                     </div>
+                    <div class="arrow">→</div>
+                    <div class="output-box" id="outputBox">?</div>
                 </div>
-                <div class="arrow">→</div>
-                <div class="output-box" id="outputBox">?</div>
+                <div class="controls">
+                    <input type="number" id="numberInput" placeholder="输入数字" value="3">
+                    <button onclick="runFunction()">🚀 运行函数</button>
+                </div>
+                <div class="tip">💡 输入一个数字，看看它会变成什么？喵~</div>
             </div>
 
-            <div class="controls">
-                <input type="number" id="numberInput" placeholder="输入数字" value="3">
-                <button onclick="runFunction()">🚀 运行函数</button>
+            <div class="practice">
+                <div class="practice-title">🎯 练习题</div>
+                <div class="question">
+                    <div class="question-text" id="questionText">如果函数是 f(x) = x + 5，那么 f(7) = ?</div>
+                    <input type="number" class="question-input" id="answerInput" placeholder="?">
+                </div>
+                <button class="check-btn" onclick="checkAnswer()">✅ 检查答案</button>
+                <div class="result" id="resultBox"></div>
+                <div class="score" id="scoreBox">得分: ⭐ 0</div>
             </div>
-
-            <div class="tip">💡 输入一个数字，看看它会变成什么？喵~</div>
         </div>
 
-        <!-- 互动练习 -->
-        <div class="practice">
-            <div class="practice-title">🎯 小喵老师的练习题</div>
-            
-            <div class="question" id="questionArea">
-                <div class="question-text" id="questionText">
-                    如果函数是 <strong>f(x) = x + 5</strong>，那么 f(7) = ?
-                </div>
-                <input type="number" class="question-input" id="answerInput" placeholder="?">
-            </div>
-
-            <button class="check-btn" onclick="checkAnswer()">✅ 检查答案</button>
-
-            <div class="result" id="resultBox"></div>
-            <div class="score" id="scoreBox">得分: ⭐ 0</div>
+        <div class="result-screen" id="resultScreen">
+            <div class="result-title" id="resultTitle">🎉 恭喜完成！</div>
+            <div class="result-score" id="resultScore">⭐ 5/5</div>
+            <div class="result-message" id="resultMessage">太棒了！喵~</div>
+            <button class="back-btn" onclick="backToMenu()">🔙 返回选择</button>
         </div>
     </div>
 
     <script>
-        // 函数定义
-        const functions = {
-            add5: { name: 'x + 5', calc: x => x + 5, text: '加5' },
-            multiply2: { name: 'x × 2', calc: x => x * 2, text: '乘2' },
-            subtract3: { name: 'x - 3', calc: x => x - 3, text: '减3' }
+        const levels = {
+            1: { name: '加法训练', total: 5, funcs: ['add'], time: 0 },
+            2: { name: '减法训练', total: 8, funcs: ['subtract'], time: 0 },
+            3: { name: '乘法训练', total: 10, funcs: ['multiply'], time: 0 },
+            4: { name: '除法训练', total: 12, funcs: ['divide'], time: 0 },
+            5: { name: '混合挑战', total: 15, funcs: ['add', 'subtract', 'multiply', 'divide'], time: 60 }
         };
 
-        let currentFunction = 'add5';
+        const funcData = {
+            add: [
+                { name: 'x + 2', calc: x => x + 2 },
+                { name: 'x + 3', calc: x => x + 3 },
+                { name: 'x + 5', calc: x => x + 5 },
+                { name: 'x + 10', calc: x => x + 10 }
+            ],
+            subtract: [
+                { name: 'x - 1', calc: x => x - 1 },
+                { name: 'x - 2', calc: x => x - 2 },
+                { name: 'x - 3', calc: x => x - 3 },
+                { name: 'x - 5', calc: x => x - 5 }
+            ],
+            multiply: [
+                { name: 'x × 2', calc: x => x * 2 },
+                { name: 'x × 3', calc: x => x * 3 },
+                { name: 'x × 4', calc: x => x * 4 },
+                { name: 'x × 5', calc: x => x * 5 }
+            ],
+            divide: [
+                { name: 'x ÷ 2', calc: x => x / 2 },
+                { name: 'x ÷ 3', calc: x => Math.floor(x / 3) },
+                { name: 'x ÷ 4', calc: x => Math.floor(x / 4) },
+                { name: 'x ÷ 5', calc: x => Math.floor(x / 5) }
+            ]
+        };
+
+        let currentLevel = 1;
+        let currentQuestion = 1;
         let score = 0;
-        let totalQuestions = 0;
+        let timerInterval = null;
+        let timeLeft = 60;
+        let currentFunc = null;
 
-        // 当前练习题
-        let currentQuestion = { x: 7, func: 'add5' };
+        function startGame(level) {
+            currentLevel = level;
+            currentQuestion = 1;
+            score = 0;
 
-        // 选择函数
-        function selectFunction(funcName) {
-            currentFunction = funcName;
-            
-            // 更新按钮样式
-            document.querySelectorAll('.function-btn').forEach(btn => {
-                btn.classList.remove('active');
+            document.getElementById('levelSelect').style.display = 'none';
+            document.getElementById('gameArea').classList.add('show');
+            document.getElementById('resultScreen').classList.remove('show');
+
+            const levelConfig = levels[level];
+            document.getElementById('progressText').textContent = `题目 ${currentQuestion}/${levelConfig.total}`;
+
+            const timerEl = document.getElementById('timer');
+            if (levelConfig.time > 0) {
+                timerEl.style.display = 'block';
+                timeLeft = levelConfig.time;
+                timerEl.textContent = `⏱️ ${timeLeft}秒`;
+                timerEl.classList.remove('warning');
+                timerInterval = setInterval(updateTimer, 1000);
+            } else {
+                timerEl.style.display = 'none';
+            }
+
+            renderFunctionSelector(levelConfig.funcs);
+            generateQuestion();
+            updateScoreDisplay();
+        }
+
+        function renderFunctionSelector(funcTypes) {
+            const container = document.getElementById('functionSelector');
+            container.innerHTML = '';
+
+            funcTypes.forEach((type, index) => {
+                const funcs = funcData[type];
+                funcs.forEach((f, i) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'function-btn' + (index === 0 && i === 0 ? ' active' : '');
+                    btn.textContent = f.name;
+                    btn.onclick = () => selectFunction(f, btn);
+                    container.appendChild(btn);
+                });
             });
-            event.target.classList.add('active');
 
-            // 更新显示
-            document.getElementById('functionName').textContent = functions[funcName].name;
+            currentFunc = funcData[funcTypes[0]][0];
+            document.getElementById('functionName').textContent = currentFunc.name;
+        }
+
+        function selectFunction(f, btn) {
+            currentFunc = f;
+            document.getElementById('functionName').textContent = f.name;
             document.getElementById('outputBox').textContent = '?';
-
-            // 生成新题目
+            document.querySelectorAll('.function-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
             generateQuestion();
         }
 
-        // 运行函数可视化
         function runFunction() {
             const input = parseInt(document.getElementById('numberInput').value);
-            
-            if (isNaN(input)) {
-                alert('喵~ 请输入一个数字！');
-                return;
-            }
+            if (isNaN(input)) { alert('喵~ 请输入一个数字！'); return; }
 
-            const result = functions[currentFunction].calc(input);
-            
-            // 动画效果
-            const inputBox = document.getElementById('inputBox');
-            const outputBox = document.getElementById('outputBox');
-            
-            inputBox.textContent = input;
-            outputBox.textContent = '...';
-            
-            // 模拟计算过程
+            const result = currentFunc.calc(input);
+            document.getElementById('inputBox').textContent = input;
+            document.getElementById('outputBox').textContent = '...';
+
             setTimeout(() => {
-                outputBox.textContent = result;
-                
-                // 显示计算过程
-                const machine = document.querySelector('.machine');
-                const oldResult = machine.querySelector('.result-anim');
-                if (oldResult) oldResult.remove();
-                
-                const resultAnim = document.createElement('div');
-                resultAnim.className = 'result-anim';
-                resultAnim.style.cssText = `
-                    position: absolute;
-                    bottom: -30px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    background: #6b4c9a;
-                    color: white;
-                    padding: 5px 15px;
-                    border-radius: 10px;
-                    font-size: 0.9em;
-                `;
-                resultAnim.textContent = `${input} → ${result}`;
-                machine.appendChild(resultAnim);
-                
-                setTimeout(() => resultAnim.remove(), 2000);
+                document.getElementById('outputBox').textContent = Number.isInteger(result) ? result : result.toFixed(1);
             }, 500);
         }
 
-        // 生成练习题
         function generateQuestion() {
-            const funcKeys = Object.keys(functions);
-            const funcKey = funcKeys[Math.floor(Math.random() * funcKeys.length)];
-            const x = Math.floor(Math.random() * 10) + 1;
-            
-            currentQuestion = { x: x, func: funcKey };
-            
-            const func = functions[funcKey];
-            document.getElementById('questionText').innerHTML = `
-                如果函数是 <strong>f(x) = ${func.name}</strong>，那么 f(${x}) = ?
-            `;
-            
+            const levelConfig = levels[currentLevel];
+            const funcs = [];
+            levelConfig.funcs.forEach(type => funcs.push(...funcData[type]));
+            const func = funcs[Math.floor(Math.random() * funcs.length)];
+            currentFunc = func;
+
+            document.getElementById('functionName').textContent = func.name;
+
+            let x;
+            if (currentLevel === 3) { x = Math.floor(Math.random() * 10) + 1; }
+            else if (currentLevel === 4) { x = Math.floor(Math.random() * 10) * 5 + 5; }
+            else { x = Math.floor(Math.random() * 15) + 1; }
+
+            document.getElementById('questionText').innerHTML = `如果函数是 <strong>f(x) = ${func.name}</strong>，那么 f(${x}) = ?`;
             document.getElementById('answerInput').value = '';
             document.getElementById('resultBox').className = 'result';
             document.getElementById('resultBox').textContent = '';
+
+            this._currentX = x;
+            this._currentFunc = func;
         }
 
-        // 检查答案
         function checkAnswer() {
-            const userAnswer = parseInt(document.getElementById('answerInput').value);
-            const correctAnswer = functions[currentQuestion.func].calc(currentQuestion.x);
+            const userAnswer = parseFloat(document.getElementById('answerInput').value);
+            const correctAnswer = this._currentFunc.calc(this._currentX);
             const resultBox = document.getElementById('resultBox');
-            
-            totalQuestions++;
-            
+
             if (userAnswer === correctAnswer) {
                 score++;
                 resultBox.className = 'result correct';
-                resultBox.innerHTML = `🎉 答对啦！太棒了喵~ <br> ${currentQuestion.x} ${functions[currentQuestion.func].text} = ${correctAnswer}`;
+                resultBox.innerHTML = `🎉 答对啦！<br> ${this._currentX} → ${correctAnswer}`;
             } else {
                 resultBox.className = 'result wrong';
-                resultBox.innerHTML = `😅 不对哦，再想想~ <br> 正确答案应该是 ${correctAnswer} 喵~`;
+                resultBox.innerHTML = `😅 不对哦~<br> 正确答案是 ${correctAnswer}`;
             }
-            
-            document.getElementById('scoreBox').textContent = `得分: ⭐ ${score} / ${totalQuestions}`;
-            
-            // 下一题
-            setTimeout(generateQuestion, 2500);
+
+            updateScoreDisplay();
+            currentQuestion++;
+
+            if (currentQuestion > levels[currentLevel].total) {
+                setTimeout(showResult, 1500);
+            } else {
+                document.getElementById('progressText').textContent = `题目 ${currentQuestion}/${levels[currentLevel].total}`;
+                setTimeout(() => {
+                    resultBox.className = 'result';
+                    generateQuestion();
+                }, 1500);
+            }
         }
 
-        // 初始化
-        generateQuestion();
+        function updateScoreDisplay() {
+            document.getElementById('scoreBox').textContent = `得分: ⭐ ${score}`;
+        }
+
+        function updateTimer() {
+            timeLeft--;
+            const timerEl = document.getElementById('timer');
+            timerEl.textContent = `⏱️ ${timeLeft}秒`;
+
+            if (timeLeft <= 10) timerEl.classList.add('warning');
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                showResult();
+            }
+        }
+
+        function showResult() {
+            if (timerInterval) clearInterval(timerInterval);
+
+            document.getElementById('gameArea').classList.remove('show');
+            document.getElementById('resultScreen').classList.add('show');
+
+            const total = levels[currentLevel].total;
+            const percentage = score / total;
+
+            let title, message;
+            if (percentage === 1) { title = '🏆 满分！太厉害了！'; message = '你是函数大师！喵~'; }
+            else if (percentage >= 0.8) { title = '🎉 非常棒！'; message = '继续加油！喵~'; }
+            else if (percentage >= 0.6) { title = '👍 不错哦！'; message = '再练习一下会更好！喵~'; }
+            else { title = '💪 继续努力！'; message = '小喵老师相信你！喵~'; }
+
+            document.getElementById('resultTitle').textContent = title;
+            document.getElementById('resultScore').textContent = `⭐ ${score} / ${total}`;
+            document.getElementById('resultMessage').textContent = message;
+        }
+
+        function backToMenu() {
+            if (timerInterval) clearInterval(timerInterval);
+            document.getElementById('levelSelect').style.display = 'block';
+            document.getElementById('gameArea').classList.remove('show');
+            document.getElementById('resultScreen').classList.remove('show');
+        }
     </script>
 </body>
 </html>

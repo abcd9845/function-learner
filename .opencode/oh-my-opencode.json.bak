@@ -1,0 +1,40 @@
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-opencode/master/assets/oh-my-opencode.schema.json",
+  "provider": {
+    "minimax": {
+      "npm": "@ai-sdk/anthropic",
+      "options": {
+        "baseURL": "https://api.minimaxi.com/anthropic/v1",
+        "apiKey": "sk-cp-g4fACHV785QabQyKY-h-epEvR8GP0KMo3O6ikhoIjMCoqra1ZSz6dIghn-zqgPQ_bDP8LcPu7hXqfZmnsOODqskGQSnWDrlpfY09mjq2vQv77XRF21Pm_K4"
+      },
+      "models": {
+        "MiniMax-M2.1": {
+          "name": "MiniMax-M2.1"
+        }
+      }
+    }
+  },
+  "agents": {
+    "sisyphus": {
+      "model": "minimax/MiniMax-M2.1"
+    },
+    "oracle": {
+      "model": "minimax/MiniMax-M2.1"
+    },
+    "frontend-ui-ux-engineer": {
+      "model": "minimax/MiniMax-M2.1"
+    },
+    "explore": {
+      "model": "minimax/MiniMax-M2.1"
+    },
+    "librarian": {
+      "model": "minimax/MiniMax-M2.1"
+    },
+    "document-writer": {
+      "model": "minimax/MiniMax-M2.1"
+    },
+    "multimodal-looker": {
+      "model": "minimax/MiniMax-M2.1"
+    }
+  }
+}
